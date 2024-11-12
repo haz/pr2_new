@@ -293,10 +293,13 @@ void PSGraph::record_snapshot(ofstream &outfile, string indent, bool keyname) {
     // Print out the nodes
     outfile << "," << endl << indent << "  \"nodes\" : {" << endl;
     bool first = true;
+    bool second = true;
     for (auto n : steps) {
         if (n) {
             if (first)
                 first = false;
+            else if (second)
+                second = false;
             else
                 outfile << "," << endl;
             n->record_snapshot(outfile, indent+"    ");

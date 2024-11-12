@@ -158,8 +158,6 @@ void update_deadends(vector< DeadendTuple* > &failed_states) {
         PR2.deadend.nondetop2fsaps[fsap->get_index()]->push_back(fsap);
 
     PR2.deadend.policy->update_policy(fsaps);
-    for (auto fsap : PR2.deadend.policy->all_items)
-        std::cout << fsap->get_index() << endl;
     PR2.deadend.states->update_policy(deadends);
 }
 
