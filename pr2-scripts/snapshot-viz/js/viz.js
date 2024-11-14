@@ -480,7 +480,6 @@ function drawPSGraph(s) {
     var ncount = 0;
     for (var nid in snapshots[s].solution.psgraph.nodes) {
         n = snapshots[s].solution.psgraph.nodes[nid];
-        nid = String(parseInt(nid) - 1);
         nname = n.action + ' ('+n.distance+')';
         init = false;
         if (n.distance == 0)

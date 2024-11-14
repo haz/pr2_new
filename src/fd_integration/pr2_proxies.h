@@ -51,6 +51,9 @@ public:
 
     string get_nondet_name() const
     {
+        if (_index == -1) {
+            return "goal_action";
+        }
         string name = get_name();
         // Split the get_name() string and return everything before _DETDUP_x and after
         //Only works up to 9 splits. Will have to be rewritten to accomdate more
@@ -131,20 +134,21 @@ public:
 };
 
 class PR2GoalProxy : public PR2OperatorProxy {
-    const AbstractTask *task;
-    int _index = -1;
+    const AbstractTask *_task;
+    int _index;
     bool _is_an_axiom = false;
     GoalsProxy goal;
 
 public:
-    int nondet_index;
-    int nondet_outcome;
 
     // TODO: https://github.com/QuMuLab/rbp/blob/main/src/search/global_operator.cc#L142
     PR2State *all_fire_context;
 
     PR2GoalProxy(const AbstractTask &task) 
-        : PR2OperatorProxy(task, -1, false), task(&task), goal(GoalsProxy(task)) {}
+        : PR2OperatorProxy(task, -1, false), goal(GoalsProxy(task)) {
+        nondet_index = -1;
+        nondet_outcome = -1;
+    }
 
     void dump() const {
         cout << "Operator: " << get_name() << endl;
@@ -160,6 +164,10 @@ public:
         cout << "Goal Achieved";
     }
     
+    string get_nondet_name() const {
+        return "goal_action";
+    }
+
     bool is_possibly_applicable(const PR2State &state) const {
         // Iterate over the conditions, and look for something that disagrees with the state
         for (auto pre : goal)
@@ -180,7 +188,7 @@ public:
     }
     // necessary as PR2GoalProxy needs to override
     EffectsProxy get_all_effects() const {
-        return EffectsProxy(*task, -1, false);
+        return EffectsProxy(*_task, -1, false);
     }
     // // necessary as PR2GoalProxy needs to override
     // ConditionsProxy * get_all_preconditions() {

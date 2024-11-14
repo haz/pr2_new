@@ -188,8 +188,8 @@ void SolutionStep::validate(set< PR2SearchNode * > &matching_nodes) {
 }
 
 void SolutionStep::record_snapshot(ofstream &outfile, string indent) {
-    if (op.get_id() == -1)
-        return;
+    // if (op.get_id() == -1)
+    //     return;
     outfile << indent << "\"" << step_id << "\": {" << endl;
     if (is_goal)
         outfile << indent << "  \"expected_successor\": false," << endl;

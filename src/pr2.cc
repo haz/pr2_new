@@ -341,8 +341,7 @@ bool PR2Wrapper::pr2_goal_check(TaskProxy task, State state) {
         (*gs)[varval.get_variable().get_id()] = varval.get_value();
 
     SolutionStep *grs = new SolutionStep(gs, PR2.solution.incumbent->network, 0,
-                                         // Null?
-                                         PR2OperatorProxy(*PR2.general.goal_op),
+                                         *(PR2.general.goal_op),
                                          -1, true, true, true);
 
     PR2.general.matched_step = grs;
