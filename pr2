@@ -97,7 +97,7 @@ function run {
         FD="$FD --build=$RELEASE_BUILD"
     fi
 
-    if [ "--disable-object-sampling" = "$1" ]; then
+    if [true]; then
         shift
     else
         # checks if there are any symmetries to play with

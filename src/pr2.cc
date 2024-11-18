@@ -311,16 +311,17 @@ void PR2OperatorProxy::update_nondet_info() {
 }
 
 bool PR2Wrapper::pr2_goal_check(TaskProxy task, State state) {
-    if (PR2.solution.incumbent){
+    if (PR2.solution.incumbent)
+    {
         SolutionStep * best_step = PR2.solution.incumbent->get_step(state);
 
         if ((best_step && PR2.weaksearch.stop_on_policy) || (best_step && best_step->is_goal)) {
         #ifndef NDEBUG
-                if (!best_step->is_goal) {
-                    PR2State *cur = new PR2State(state);
-                    assert(!is_forbidden(*cur, best_step->op));
-                    delete cur;
-                }
+            if (!best_step->is_goal) {
+                PR2State *cur = new PR2State(state);
+                assert(!is_forbidden(*cur, best_step->op));
+                delete cur;
+            }
         #endif
             PR2.general.matched_step = best_step;
             return true;

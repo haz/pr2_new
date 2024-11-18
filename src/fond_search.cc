@@ -315,8 +315,6 @@ bool case3_predefined_path(PR2SearchStatus * SS) {
         //  of the inconsistent full-states that share the same
         //  abstract path. Thus, this check becomes an invariant.
 
-        solstep->state;
-
         assert(SS->current_state->entails(*(solstep->state)));
         assert(SS->previous_step);
 
