@@ -302,6 +302,9 @@ struct PR2Wrapper {
         bool final_fsap_free_round = true; // Do a final best-effort round
         bool optimize_final_solution = true; // Rebuild the final solution to throw away irrelevant parts
 
+        bool successor_generator_defined = false;
+        successor_generator::SuccessorGenerator *successor_generator;
+
         // General stats
         unsigned int num_vars = 0; // The number of variables in the problem
 
@@ -340,8 +343,10 @@ struct PR2Wrapper {
             /**************************************************************/
 
             
-            else if (args[i].compare("--search") == 0)
-                assert(args[++i] == "pr2search()");
+            else if (args[i].compare("--search") == 0){
+                ++i;
+                assert(args[i] == "pr2search()");
+            }
 
             else if (args[i].compare("--internal-plan-file") == 0) {
                 ++i;continue;

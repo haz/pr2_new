@@ -363,6 +363,8 @@ function drawFullGraph(s) {
     }
 
     fsstates = false;
+    fsstates = snapshots[s].solution;
+
 
     fsnodes.forEach(function (v) { v.height = v.width = 2 * fsnodeRadius; });
 
@@ -416,8 +418,11 @@ function drawFullGraph(s) {
     });
 
     fsnode.on("mouseover", function(d) {
-              $('#state').html('<pre></pre>');
-              $('#state').html('<h4>Complete State for SearchNode ('+d.nid+')</h4><pre>\nComing soon...</pre>');
+        $('#state').html('<pre></pre>');
+        console.log(d);
+        console.log(fsstates);
+        $('#state').html('<h4>Complete State for SearchNode ('+d.nid+')</h4><pre>\nComing soon...</pre>');
+              $('#state').html()
               if (COLLAPSE_FSGRAPH_CHAINS)
                   $('#collapsed_path').html('\n<h4>Chain of nodes:</h4>\n<pre>'+d.name+'</pre>\n');
               else
@@ -516,18 +521,6 @@ function drawPSGraph(s) {
                 u = psnode2id[e[0]];
                 v = psnode2id[e[2]];
             }
-
-            console.log(u);
-            console.log(v);
-
-            console.log(psnodes);
-            console.log(pslinks);
-            console.log(pssucc);
-            console.log(pspred);
-            console.log(psstates);
-            console.log(newpsnodes);
-            console.log(newpspaths);
-            console.log(psnode2id);
 
             if (!(u === undefined || v === undefined)) {
                 pslinks.push({ source: u, target: v, id: u + '-' + v });
@@ -673,7 +666,9 @@ function drawPSGraph(s) {
     });
 
     psnode.on("mouseover", function(d) {
-              $('#state').html('<pre></pre>');
+        $('#state').html('<pre></pre>');
+        console.log(d);
+        console.log(psstates);
               if (d.data && psstates)
                   $('#state').html('<h4>Partial State for SolutionStep ('+d.nid+")</h4><pre>\n"+
                                     psstates[d.data.state].join("\n")+'</pre>');

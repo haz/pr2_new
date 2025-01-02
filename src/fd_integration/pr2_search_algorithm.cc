@@ -42,7 +42,7 @@ unique_ptr<SearchAlgorithm> PR2Search::get_search_engine() {
     if (h) {
         h->reset(*goals);
     } else {
-        h = make_shared<fsap_penalized_ff_heuristic::FSAPPenalizedFFHeuristic>(tasks::g_root_task, true, "FSAP Aware Heuristic", utils::Verbosity::SILENT);
+        h = make_shared<fsap_penalized_ff_heuristic::FSAPPenalizedFFHeuristic>(tasks::g_root_task, true, "FSAP Aware Heuristic", utils::Verbosity::NORMAL);
         preferred_list.push_back(h);
         preferred_list_scalar.push_back(h);
     }
@@ -64,7 +64,7 @@ unique_ptr<SearchAlgorithm> PR2Search::get_search_engine() {
         -1,
         ONE,
         numeric_limits<int>::max(),
-        numeric_limits<double>::infinity(),
+        PR2.time.limit - PR2.time.time_taken(),
         "PR2 Search",
         utils::Verbosity::SILENT,
         weak_task,

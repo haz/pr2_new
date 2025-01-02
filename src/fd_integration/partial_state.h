@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <set>
 
 #include "../../task_proxy.h"
 
@@ -27,6 +28,8 @@ public:
     const std::vector<int> &get_unpacked_values() const {
         return vars;
     };
+
+    std::set<int> untouchables = {}; //values of untouchables
 
     PR2State &operator=(const PR2State &other);
 
