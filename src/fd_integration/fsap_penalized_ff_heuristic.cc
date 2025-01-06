@@ -39,14 +39,14 @@ void FSAPPenalizedFFHeuristic::enqueue_if_necessary(PropID prop_id, int cost, Op
     }
     if (PR2.logging.heuristic) {
         UnaryOperator *op = get_operator(op_id);
-        if (op) {
+        if (cost > 0) {
             cout << "Enquing operator " << PR2.proxy->get_operators()[op->operator_no].get_name() << " at cost " << cost << endl;
             cout << "  PRE:";
-            for (auto pre : get_preconditions(op->operator_no))
-                cout << "  " << pre;
-            cout << "\n  EFF:  " << prop << endl;
+            for (auto pre : get_preconditions(op_id))
+                cout << "  " << propnames[pre];
+            cout << "\n  EFF:  " << propnames[prop_id] << endl;
         } else
-            cout << "Enquing true prop " << prop << " at cost " << cost << endl;
+            cout << "Enquing true prop " << propnames[prop_id] << " at cost " << cost << endl;
     }
     assert(prop->cost != -1 && prop->cost <= cost);
 }
