@@ -272,7 +272,7 @@ public:
     void set_goal(const PR2State &state) {
         vector<pair<int, int>> goal_facts;
 
-        for (int i = 0; i <= state.numvars(); i++)
+        for (int i = 0; i < state.numvars(); i++)
         {
             if (state[i] != -1)
                 goal_facts.push_back(make_pair(i, state[i]));
