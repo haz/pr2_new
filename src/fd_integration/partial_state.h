@@ -48,6 +48,7 @@ public:
     }
 
     int size() const;
+    int numvars() const { return vars.size(); }
 
     PR2State * progress(const PR2OperatorProxy &op);
     PR2State * regress(const PR2OperatorProxy &op, PR2State *context=NULL);

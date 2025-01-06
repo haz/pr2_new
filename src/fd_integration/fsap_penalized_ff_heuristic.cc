@@ -279,6 +279,10 @@ int FSAPPenalizedFFHeuristic::compute_add_and_ff(const State &state) {
         cout << "\nFSAP-Heur(" << PR2.logging.id() << "): Computing heuristic for the following state:" << endl;
         PR2.proxy->dump_pddl_state(state);
         cout << endl;
+
+        cout << "Goals:" << endl;
+        for (auto goal : goal_propositions)
+            cout << "  " << propnames[goal] << endl;
     }
 
     setup_exploration_queue();
