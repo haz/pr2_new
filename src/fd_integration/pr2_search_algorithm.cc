@@ -82,8 +82,16 @@ SearchStatus PR2Search::step() {
     unique_ptr<SearchAlgorithm> current_search = get_search_engine();
     current_search->search();
 
-    if (current_search->found_solution())
+    if (current_search->found_solution()) {
         set_plan(current_search->get_plan());
+        if (PR2.logging.verbose) {
+            cout << "Solution found!" << endl;
+            for (const auto & opid : get_plan()) {
+                cout << PR2.proxy->get_operators()[opid].get_name() << endl;
+            }
+        }
+        current_search->print_statistics();
+    }
 
     return current_search->get_status();
 }
