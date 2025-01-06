@@ -25,7 +25,7 @@ bool PR2Wrapper::run_pr2() {
     opts.set("bound", 999999);
     opts.set("max_time", PR2.time.limit);
     opts.set("description", "PR2_Search");
-    opts.set("verbosity", utils::Verbosity::NORMAL);
+    opts.set("verbosity", utils::Verbosity::SILENT);
     
     PR2.pr2_engine = make_shared<pr2_search::PR2Search>(opts);
 
