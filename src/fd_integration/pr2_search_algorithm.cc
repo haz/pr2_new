@@ -90,8 +90,8 @@ SearchStatus PR2Search::step() {
             for (const auto & opid : get_plan()) {
                 cout << PR2.proxy->get_operators()[opid].get_name() << endl;
             }
+            current_search->print_statistics();
         }
-        current_search->print_statistics();
     }
 
     return current_search->get_status();
