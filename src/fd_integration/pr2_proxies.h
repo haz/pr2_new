@@ -199,18 +199,18 @@ public:
 class PR2TaskProxy : public TaskProxy {
 
     // Map from operator id to nondet index
-    vector<int>* nondet_index_map;
+    vector<int> nondet_index_map;
 
     const AbstractTask *task;
     PR2State *orig_initial_state;
 
     // Store the ever-changing goals/initial state
     PR2State *current_initial_state;
-    vector<FactPair> *current_goals;
+    vector<FactPair> current_goals;
 
 public:
 
-    explicit PR2TaskProxy(const AbstractTask &task, PR2State *init) : TaskProxy(task), task(&task), orig_initial_state(init) {}
+    explicit PR2TaskProxy(const AbstractTask &task, PR2State *init) : TaskProxy(task), nondet_index_map(), task(&task), orig_initial_state(init), current_goals() {}
 
     PR2OperatorsProxy get_operators() const {
         const OperatorsProxy &ops = TaskProxy::get_operators();
@@ -221,13 +221,15 @@ public:
         return new PR2GoalProxy(*task);
     }
 
-    void set_nondet_index_map(vector<int> &nmap) {
-        nondet_index_map = &nmap;
+    void set_nondet_index_map(const vector<int> &nmap) {
+        nondet_index_map = nmap;
     }
     int get_nondet_index(int op_id) const {
-        if (nondet_index_map == nullptr)
+        if (nondet_index_map.empty() || op_id == -1)
             return -1;
-        return (*nondet_index_map)[op_id];
+        assert(op_id < static_cast<int>(nondet_index_map.size()));
+        assert(op_id >= 0);
+        return nondet_index_map[op_id];
     }
     int get_nondet_index(OperatorID op) const {
         return get_nondet_index(op.get_index());
@@ -266,8 +268,8 @@ public:
     
 
 
-    void set_goal(vector<FactPair> &goal_facts) {
-        current_goals = &goal_facts;
+    void set_goal(const vector<FactPair> &goal_facts) {
+        current_goals = goal_facts;
     }
     void set_goal(const PR2State &state) {
         vector<pair<int, int>> goal_facts;
@@ -287,7 +289,7 @@ public:
         }
         set_goal(goal_facts_);
     }
-    vector<FactPair> *get_pr2_goals() const {
+    vector<FactPair> get_pr2_goals() const {
         return current_goals;
     }
 
