@@ -34,12 +34,13 @@ unique_ptr<SearchAlgorithm> PR2Search::get_search_engine() {
       factory function with somewhat complex behaviour.
     */
 
+    //Move is destructive and necessary.
     auto initial_state_values = PR2.proxy->get_pr2_initial_state()->get_unpacked_values();
-    vector<FactPair> goals = PR2.proxy->get_pr2_goals();
     std::shared_ptr<extra_tasks::WeakPlanningTask> weak_task = std::make_shared<extra_tasks::WeakPlanningTask>(tasks::g_root_task, std::move(initial_state_values), std::move(PR2.proxy->get_pr2_goals()));
 
     // Build FF heuristic object.
     if (h) {
+        vector<FactPair> goals = PR2.proxy->get_pr2_goals();
         h->reset(goals);
     } else {
         h = make_shared<fsap_penalized_ff_heuristic::FSAPPenalizedFFHeuristic>(tasks::g_root_task, true, "FSAP Aware Heuristic", utils::Verbosity::NORMAL);
