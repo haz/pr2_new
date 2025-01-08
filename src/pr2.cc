@@ -260,7 +260,7 @@ PR2Wrapper PR2; // Holds all of the settings and data for PR2
 
 void PR2Wrapper::generate_nondet_operator_mappings() {
     // Map from operator id to nondet index
-    vector<int>* nondet_index_map = new vector<int>(PR2.proxy->get_operators().size());
+    vector<int> nondet_index_map = vector<int>(PR2.proxy->get_operators().size());
 
     // assert that the mappings are empty
     assert(PR2.general.nondet_mapping.empty());
@@ -291,7 +291,7 @@ void PR2Wrapper::generate_nondet_operator_mappings() {
             PR2.general.nondet_mapping[nondet_name_to_index[op.get_nondet_name()]].size() - 1;
         op.nondet_index = nondet_name_to_index[op.get_nondet_name()];
         op.nondet_outcome = PR2.general.nondet_outcome_mapping[op.get_id()];
-        (*nondet_index_map)[op.get_id()] = op.nondet_index;
+        nondet_index_map[op.get_id()] = op.nondet_index;
 
         for (auto eff : op.get_all_effects()) {
             for (auto cond : eff.get_conditions()) {
@@ -302,7 +302,7 @@ void PR2Wrapper::generate_nondet_operator_mappings() {
         }
     }
 
-    PR2.proxy->set_nondet_index_map(*nondet_index_map);
+    PR2.proxy->set_nondet_index_map(nondet_index_map);
 }
 
 void PR2OperatorProxy::update_nondet_info() {
