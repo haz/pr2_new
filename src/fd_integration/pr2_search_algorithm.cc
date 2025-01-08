@@ -36,11 +36,11 @@ unique_ptr<SearchAlgorithm> PR2Search::get_search_engine() {
 
     auto initial_state_values = PR2.proxy->get_pr2_initial_state()->get_unpacked_values();
     auto goals = PR2.proxy->get_pr2_goals();
-    std::shared_ptr<extra_tasks::WeakPlanningTask> weak_task = std::make_shared<extra_tasks::WeakPlanningTask>(tasks::g_root_task, std::move(initial_state_values), std::move(*goals));
+    std::shared_ptr<extra_tasks::WeakPlanningTask> weak_task = std::make_shared<extra_tasks::WeakPlanningTask>(tasks::g_root_task, std::move(initial_state_values), std::move(goals));
 
     // Build FF heuristic object.
     if (h) {
-        h->reset(*goals);
+        h->reset(goals);
     } else {
         h = make_shared<fsap_penalized_ff_heuristic::FSAPPenalizedFFHeuristic>(tasks::g_root_task, true, "FSAP Aware Heuristic", utils::Verbosity::NORMAL);
         preferred_list.push_back(h);
